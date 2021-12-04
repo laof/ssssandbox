@@ -52,12 +52,14 @@ function stringHTML(htmlString) {
   return text.join("\n");
 }
 
-function loadData(url, format) {
+function loadData(url) {
   return new Promise(async (resolve) => {
     try {
       const response = await got(atob(url));
-      const list = getList(stringHTML(response.body), format);
-      resolve(list);
+      const html = stringHTML(response.body)
+      const ssr = getList(html, "ssr");
+      const ss = getList(html, "ss");
+      resolve(ssr.concat(ss));
     } catch (error) {
       resolve("error.response.body");
     }
@@ -66,7 +68,8 @@ function loadData(url, format) {
 
 /* GET data */
 router.get("/", function (req, res, next) {
-  loadData(re, "ssr")
+
+  loadData(re)
     .then((list) => {
       const data = list.map((item) => item.value).join("\n");
       res.send(data);
