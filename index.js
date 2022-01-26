@@ -72,7 +72,8 @@ router.get("/", function (req, res, next) {
   loadData(re)
     .then((list) => {
       const data = list.map((item) => item.value).join("\n");
-      res.send(data);
+      const html = `<div id="lova_202201262243">${data}</div>`
+      res.send(html);
     })
     .catch((e) => {
       res.send("loadData Error ...");
