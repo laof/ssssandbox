@@ -144,6 +144,11 @@ router.get("/app", function (req, res, next) {
   `);
 });
 
+/* GET data */
+router.get("/json", function (req, res, next) {
+  res.send({data:34});
+});
+
 const app = express();
 
 app.use("/", router);
